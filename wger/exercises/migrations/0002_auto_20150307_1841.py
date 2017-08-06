@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 import uuid
 
+
 def generate_uuids(apps, schema_editor):
     '''
     Generate new UUIDs for each exercise
