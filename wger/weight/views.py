@@ -204,8 +204,7 @@ class WeightCsvImportFormPreview(FormPreview):
                 'form_action': reverse('weight:import-csv')}
 
     def process_preview(self, request, form, context):
-        context['weight_list'],
-        context['error_list'] = helpers.parse_weight_csv(
+        context['weight_list'], context['error_list'] = helpers.parse_weight_csv(
             request, form.cleaned_data)
         return context
 
