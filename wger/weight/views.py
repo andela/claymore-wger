@@ -148,7 +148,7 @@ def overview(request, username=None):
                                      'month': min_date.month,
                                      'day': min_date.day}
     if max_date:
-        template_data['max_date'] = 'new Date( % (year)s, % (month)s, % (day)s)' % \
+        template_data['max_date'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
             {'year': max_date.year,
                 'month': max_date.month,
                 'day': max_date.day}
