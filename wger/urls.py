@@ -172,6 +172,14 @@ urlpatterns += [
 ]
 
 #
+# URLs for social app
+#
+urlpatterns += [
+    url('', include('social_django.urls', namespace='social')),
+    url('', include('django.contrib.auth.urls', namespace='auth')),
+]
+
+#
 # URL for user uploaded files, served like this during development only
 #
 if settings.DEBUG:
