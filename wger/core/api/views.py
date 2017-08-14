@@ -16,9 +16,11 @@
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.auth.models import User
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
 
 from wger.core.models import (
     UserProfile,
@@ -33,7 +35,8 @@ from wger.core.api.serializers import (
     DaysOfWeekSerializer,
     LicenseSerializer,
     RepetitionUnitSerializer,
-    WeightUnitSerializer
+    WeightUnitSerializer,
+    UserCreationSerializer
 )
 from wger.core.api.serializers import UserprofileSerializer
 from wger.utils.permissions import UpdateOnlyPermission, WgerPermission
@@ -68,6 +71,47 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
         user = self.get_object().user
         return Response(UsernameSerializer(user).data)
+
+
+class CreateUserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for creating users
+
+    """
+    # serializer_class = UserCreationSerializer
+    # queryset = User.objects.all()
+
+    def create(self, request):
+        user_data = request.user
+
+        data = JSONParser().parse(request)
+
+        serializer = UserCreationSerializer(data=data)
+        user_profile = UserProfile.objects.get(user=user_data)
+
+        if serializer.is_valid():
+            if user_profile.create_perm:
+                try:
+
+                    user = User(username=serializer.validated_data['username'],
+                                password=serializer.validated_data['password'],
+                                email=serializer.validated_data['email']
+                                )
+                    serializer.save()
+
+                    created_prof = UserProfile.objects.get(user=user)
+                    created_prof.app_flag = user.username
+                    created_prof.save()
+
+                    return Response({"message": "User created successfully"})
+
+                except:
+                    return Response({"message": "problem creating the user"})
+
+            else:
+                return Response({"message": "User lacks permission to create"})
+
+        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 
 class LanguageViewSet(viewsets.ReadOnlyModelViewSet):
@@ -121,3 +165,6 @@ class WeightUnitViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = WeightUnitSerializer
     ordering_fields = '__all__'
     filter_fields = ('name', )
+
+
+

@@ -108,6 +108,9 @@ class UserProfile(models.Model):
     '''
     The user
     '''
+    app_flag = models.CharField(default=None, null=True, max_length=255)
+
+    create_perm = models.BooleanField(editable=False, default=False)
 
     gym = models.ForeignKey(Gym,
                             editable=False,
