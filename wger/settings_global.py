@@ -136,7 +136,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.google.GoogleOAuth',
     'social_core.backends.twitter.TwitterOAuth',
-    # 'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'wger.utils.helpers.EmailAuthBackend'
 )
@@ -383,28 +383,18 @@ WGER_SETTINGS = {
     'TWITTER': False
 }
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =  "20992914693-rdq3h7ql0mh7un97r5m8ibk0ln0bv1cc"
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "bP6gU1m2zpjY8alFX52YXWjG"
-SOCIAL_AUTH_TWITTER_KEY = 'nA2gaNnws224aimEudG4hcTyL'
-SOCIAL_AUTH_TWITTER_SECRET = 'NC7AUDBbBw08A34q5pTvfEO7MyvUsm7JDPAyusIHZEkZWRWcly'
-# SOCIAL_AUTH_FACEBOOK_APP_KEY = '192022521337897'
-# SOCIAL_AUTH_FACEBOOK_APP_SECRET = 'ccc5d9b1226fdd120258e0662b43d5a4'
-# SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = 'wger-claymore'
 SOCIAL_AUTH_USER_MODEL = 'auth.User'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_LOGIN_URL = '/user/login'
-# SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error/'
 SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/'
-# SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/account-disconnected-redirect-url/'
-# SOCIAL_AUTH_INACTIVE_USER_URL = '/inactive-user/'
 
-# SOCIAL_AUTH_PIPELINE = (
-#     'social_core.pipeline.user.user_details',
-# )
+# Add your Secret Key and Api Tokens to your settings.py file.
+# Use the below format.
 
-# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-#   'locale': 'ru_RU',
-#   'fields': 'id, name, email, age_range'
-# }
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =  "your google token key"
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "your google secret key"
+# SOCIAL_AUTH_TWITTER_KEY = 'your twitter token'
+# SOCIAL_AUTH_TWITTER_SECRET = 'your twitter secret key'
+# SOCIAL_AUTH_FACEBOOK_APP_KEY = 'your facebook token'
+# SOCIAL_AUTH_FACEBOOK_APP_SECRET = 'your facebook secret key'
