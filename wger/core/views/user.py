@@ -508,10 +508,15 @@ class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         Return a list with the users, not really a queryset.
         '''
         out = {'admins': [],
-               'members': []}
+               'active_members': [],
+               'inactive_members':[]}
 
-        for u in User.objects.select_related('usercache', 'userprofile__gym').all():
-            out['members'].append({'obj': u,
+        for u in User.objects.select_related('usercache', 'userprofile__gym').filter(is_active=True):
+            out['active_members'].append({'obj': u,
+                                   'last_log': u.usercache.last_activity})
+
+        for u in User.objects.select_related('usercache', 'userprofile__gym').filter(is_active=False):
+            out['inactive_members'].append({'obj': u,
                                    'last_log': u.usercache.last_activity})
 
         return out
@@ -521,11 +526,15 @@ class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         Pass other info to the template
         '''
         context = super(UserListView, self).get_context_data(**kwargs)
+
+        print("context is", context)
+
         context['show_gym'] = True
         context['user_table'] = {'keys': [_('ID'),
                                           _('Username'),
                                           _('Name'),
                                           _('Last activity'),
                                           _('Gym')],
-                                 'users': context['object_list']['members']}
+                                 'users': context['object_list']['active_members'],
+                                 'inactive_users': context['object_list']['inactive_members']}
         return context
