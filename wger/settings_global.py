@@ -86,6 +86,10 @@ INSTALLED_APPS = (
 
     # django-bower for installing bower packages
     'djangobower',
+
+    # social auth app django - for social authentication.yield
+
+    'social_django',
 )
 
 # added list of external libraries to be installed by bower
@@ -129,6 +133,10 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'wger.utils.helpers.EmailAuthBackend'
 )
@@ -154,7 +162,11 @@ TEMPLATES = [
                 'django_mobile.context_processors.flavour',
 
                 # Breadcrumbs
-                'django.template.context_processors.request'
+                'django.template.context_processors.request',
+
+                # Social auth app
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
             'loaders': [
                 # Django mobile
@@ -366,7 +378,33 @@ WGER_SETTINGS = {
     'USE_RECAPTCHA': False,
     'REMOVE_WHITESPACE': False,
     'ALLOW_REGISTRATION': True,
-    'ALLOW_GUEST_USERS': True,
+    'ALLOW_GUEST_USERS': False,
     'EMAIL_FROM': 'wger Workout Manager <wger@example.com>',
     'TWITTER': False
 }
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =  "20992914693-rdq3h7ql0mh7un97r5m8ibk0ln0bv1cc"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "bP6gU1m2zpjY8alFX52YXWjG"
+SOCIAL_AUTH_TWITTER_KEY = 'nA2gaNnws224aimEudG4hcTyL'
+SOCIAL_AUTH_TWITTER_SECRET = 'NC7AUDBbBw08A34q5pTvfEO7MyvUsm7JDPAyusIHZEkZWRWcly'
+# SOCIAL_AUTH_FACEBOOK_APP_KEY = '192022521337897'
+# SOCIAL_AUTH_FACEBOOK_APP_SECRET = 'ccc5d9b1226fdd120258e0662b43d5a4'
+# SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = 'wger-claymore'
+SOCIAL_AUTH_USER_MODEL = 'auth.User'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_URL = '/user/login'
+# SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error/'
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/'
+# SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/account-disconnected-redirect-url/'
+# SOCIAL_AUTH_INACTIVE_USER_URL = '/inactive-user/'
+
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_core.pipeline.user.user_details',
+# )
+
+# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+#   'locale': 'ru_RU',
+#   'fields': 'id, name, email, age_range'
+# }
