@@ -126,7 +126,7 @@
             "is_front": false, 
             "name": "Triceps brachii"
         }
-    }
+    },
     {
         "pk": 17,
         "model": "exercises.muscle",
@@ -150,7 +150,7 @@
             "is_front": false,
             "name": "Posterious Deltoid"
         }
-    }
+    },
     {
         "pk": 18,
         "model": "exercises.muscle",
