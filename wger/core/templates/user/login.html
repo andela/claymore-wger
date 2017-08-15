@@ -41,6 +41,13 @@
      </a>
 </p>
 
+<p>
+     <a href="{% url 'social:begin' 'facebook' %}?next={{ next }}"
+        class="btn btn-block btn-default">
+         {% trans "Login with Facebook" %}
+     </a>
+</p>
+
 <h4>{% trans "Forgot password?" %}</h4>
 <p>
     <a href="{% url 'core:user:password_reset' %}" class="btn btn-block btn-default">
