@@ -127,4 +127,37 @@
             "name": "Triceps brachii"
         }
     }
+    {
+        "pk": 17,
+        "model": "exercises.muscle",
+        "fields": {
+            "is_front": false,
+            "name": "Lateral Deltoid"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "exercises.muscle",
+        "fields": {
+            "is_front": true,
+            "name": "Fore arms"
+        }
+    },
+    {
+        "pk": 19,
+        "model": "exercises.muscle",
+        "fields": {
+            "is_front": false,
+            "name": "Posterious Deltoid"
+        }
+    }
+    {
+        "pk": 18,
+        "model": "exercises.muscle",
+        "fields": {
+            "is_front": true,
+            "name": "Obliquus externus abdominis"
+        }
+    }
+    
 ]
