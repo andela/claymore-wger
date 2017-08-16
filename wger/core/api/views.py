@@ -78,10 +78,9 @@ class CreateUserViewSet(viewsets.ModelViewSet):
     API endpoint for creating users
 
     """
-    # serializer_class = UserCreationSerializer
-    # queryset = User.objects.all()
 
     def create(self, request):
+        """ Allows a user to create another user if they're authorised"""
         user_data = request.user
 
         data = JSONParser().parse(request)
