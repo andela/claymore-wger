@@ -396,5 +396,5 @@ SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/'
 # SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "your google secret key"
 # SOCIAL_AUTH_TWITTER_KEY = 'your twitter token'
 # SOCIAL_AUTH_TWITTER_SECRET = 'your twitter secret key'
-# SOCIAL_AUTH_FACEBOOK_APP_KEY = 'your facebook token'
-# SOCIAL_AUTH_FACEBOOK_APP_SECRET = 'your facebook secret key'
+# SOCIAL_AUTH_FACEBOOK_KEY = 'your facebook token'
+# SOCIAL_AUTH_FACEBOOK_SECRET = 'your facebook secret key'
