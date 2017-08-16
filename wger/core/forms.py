@@ -56,6 +56,11 @@ class UserPreferencesForm(forms.ModelForm):
 
 
 class UserEmailForm(forms.ModelForm):
+    '''
+    Form for Emails
+
+    Used for password resets and, optionally, email reminders
+    '''
     email = EmailField(label=_("Email"),
                        help_text=_("Used for password resets and, optionally, email reminders."),
                        required=False)
@@ -88,6 +93,11 @@ class UserEmailForm(forms.ModelForm):
 
 
 class UserPersonalInformationForm(UserEmailForm):
+    '''
+    Form for Personal information
+
+    Overwritten here just to change the label on the 'username' field
+    '''
     first_name = forms.CharField(label=_('First name'),
                                  required=False)
     last_name = forms.CharField(label=_('Last name'),

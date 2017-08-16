@@ -89,7 +89,8 @@ class WeightUpdateView(WgerFormMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(WeightUpdateView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('weight:edit', kwargs={'pk': self.object.id})
+        context['form_action'] = reverse(
+            'weight:edit', kwargs={'pk': self.object.id})
         context['title'] = _('Edit weight entry for the %s') % self.object.date
 
         return context
@@ -148,9 +149,9 @@ def overview(request, username=None):
                                      'day': min_date.day}
     if max_date:
         template_data['max_date'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
-                                    {'year': max_date.year,
-                                     'month': max_date.month,
-                                     'day': max_date.day}
+            {'year': max_date.year,
+                'month': max_date.month,
+                'day': max_date.day}
 
     last_weight_entries = helpers.get_last_entries(user)
 
@@ -203,12 +204,14 @@ class WeightCsvImportFormPreview(FormPreview):
                 'form_action': reverse('weight:import-csv')}
 
     def process_preview(self, request, form, context):
-        context['weight_list'], context['error_list'] = helpers.parse_weight_csv(request,
-                                                                                 form.cleaned_data)
+        context['weight_list'], context['error_list'] = helpers.parse_weight_csv(
+            request, form.cleaned_data)
         return context
 
     def done(self, request, cleaned_data):
-        weight_list, error_list = helpers.parse_weight_csv(request, cleaned_data)
+        weight_list, error_list = helpers.parse_weight_csv(
+            request, cleaned_data)
         WeightEntry.objects.bulk_create(weight_list)
-        return HttpResponseRedirect(reverse('weight:overview',
-                                            kwargs={'username': request.user.username}))
+        return HttpResponseRedirect(reverse(
+            'weight:overview',
+            kwargs={'username': request.user.username}))
