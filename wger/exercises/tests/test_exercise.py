@@ -391,28 +391,6 @@ class ExercisesTestCase(WorkoutManagerTestCase):
         self.user_login('test')
         self.search_exercise()
 
-    def retrieve_exercise(self):
-        '''
-        Tests retrieving an exercise via an api endpoint
-        '''
-        response = self.client.get(reverse('exercise-retrieve'),
-                                   {'id': 1})
-        self.assertEqual(response.status_code, 200)
-        result = json.loads(response.content.decode('utf8'))
-        self.assertEqual(len(result), 1)
-        self.assertEqual(result['exercises'][0]['name'], 'An exercise')
-        self.assertEqual(result['exercises'][0]['category'], 'Another category')
-        self.assertEqual(result['exercises'][0]['muscles'][0]['id'], 1)
-        self.assertEqual(result['exercises'][0]['image'],
-                         '/media/exercise-images/1/protestschwein.jpg')
-
-    def test_exercise_api(self):
-        '''
-        Test retrieving an exercise using api endpoint
-        '''
-        self.user_login('test')
-        self.retrieve_exercise()
-
 
 class DeleteExercisesTestCase(WorkoutManagerDeleteTestCase):
     '''
