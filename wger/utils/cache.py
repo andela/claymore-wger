@@ -17,6 +17,8 @@ import hashlib
 
 from django.core.cache import cache
 from django.utils.encoding import force_bytes
+from django.utils.http import urlquote
+
 
 
 logger = logging.getLogger(__name__)
@@ -27,7 +29,7 @@ def get_template_cache_name(fragment_name='', *args):
     Logic to calculate the cache key name when using django's template cache.
     Code taken from django/templatetags/cache.py
     '''
-    key = u':'.join([str(arg) for arg in args])
+    key = u':'.join([urlquote(arg) for arg in args])
     key_name = hashlib.md5(force_bytes(key)).hexdigest()
     return 'template.cache.{0}.{1}'.format(fragment_name, key_name)
 
@@ -78,6 +80,7 @@ class CacheKeyMapper(object):
             pk = param
 
         return pk
+
 
     def get_exercise_muscle_bg_key(self, param):
         '''
