@@ -98,11 +98,11 @@ def delete(request, user_pk=None):
         # Forbidden if the user has not enough rights, doesn't belong to the
         # gym or is an admin as well. General admins can delete all users.
         if not request.user.has_perm('gym.manage_gyms') \
-                and (not request.user.has_perm('gym.manage_gym')
-                     or request.user.userprofile.gym_id != user.userprofile.gym_id
-                     or user.has_perm('gym.manage_gym')
-                     or user.has_perm('gym.gym_trainer')
-                     or user.has_perm('gym.manage_gyms')):
+                and (not request.user.has_perm('gym.manage_gym') or
+                     request.user.userprofile.gym_id != user.userprofile.gym_id or
+                     user.has_perm('gym.manage_gym') or
+                     user.has_perm('gym.gym_trainer') or
+                     user.has_perm('gym.manage_gyms')):
             return HttpResponseForbidden()
     else:
         user = request.user
@@ -150,16 +150,16 @@ def trainer_login(request, user_pk):
 
     # Changing between trainers or managers is not allowed
     if request.user.has_perm('gym.gym_trainer') \
-            and (user.has_perm('gym.gym_trainer')
-                 or user.has_perm('gym.manage_gym')
-                 or user.has_perm('gym.manage_gyms')):
+            and (user.has_perm('gym.gym_trainer') or
+                 user.has_perm('gym.manage_gym') or
+                 user.has_perm('gym.manage_gyms')):
         return HttpResponseForbidden()
 
     # Check if we're switching back to our original account
     own = False
-    if (user.has_perm('gym.gym_trainer')
-            or user.has_perm('gym.manage_gym')
-            or user.has_perm('gym.manage_gyms')):
+    if (user.has_perm('gym.gym_trainer') or
+            user.has_perm('gym.manage_gym') or
+            user.has_perm('gym.manage_gyms')):
         own = True
 
     # Note: it seems we have to manually set the authentication backend here
@@ -508,10 +508,15 @@ class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         Return a list with the users, not really a queryset.
         '''
         out = {'admins': [],
-               'members': []}
+               'active_members': [],
+               'inactive_members':[]}
 
-        for u in User.objects.select_related('usercache', 'userprofile__gym').all():
-            out['members'].append({'obj': u,
+        for u in User.objects.select_related('usercache', 'userprofile__gym').filter(is_active=True):
+            out['active_members'].append({'obj': u,
+                                   'last_log': u.usercache.last_activity})
+
+        for u in User.objects.select_related('usercache', 'userprofile__gym').filter(is_active=False):
+            out['inactive_members'].append({'obj': u,
                                    'last_log': u.usercache.last_activity})
 
         return out
@@ -521,11 +526,15 @@ class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         Pass other info to the template
         '''
         context = super(UserListView, self).get_context_data(**kwargs)
+
+        print("context is", context)
+
         context['show_gym'] = True
         context['user_table'] = {'keys': [_('ID'),
                                           _('Username'),
                                           _('Name'),
                                           _('Last activity'),
                                           _('Gym')],
-                                 'users': context['object_list']['members']}
+                                 'users': context['object_list']['active_members'],
+                                 'inactive_users': context['object_list']['inactive_members']}
         return context

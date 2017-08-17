@@ -86,6 +86,10 @@ INSTALLED_APPS = (
 
     # django-bower for installing bower packages
     'djangobower',
+
+    # social auth app django - for social authentication.yield
+
+    'social_django',
 )
 
 # added list of external libraries to be installed by bower
@@ -129,6 +133,10 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'wger.utils.helpers.EmailAuthBackend'
 )
@@ -154,7 +162,11 @@ TEMPLATES = [
                 'django_mobile.context_processors.flavour',
 
                 # Breadcrumbs
-                'django.template.context_processors.request'
+                'django.template.context_processors.request',
+
+                # Social auth app
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
             'loaders': [
                 # Django mobile
@@ -370,3 +382,19 @@ WGER_SETTINGS = {
     'EMAIL_FROM': 'wger Workout Manager <wger@example.com>',
     'TWITTER': False
 }
+
+SOCIAL_AUTH_USER_MODEL = 'auth.User'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_URL = '/user/login'
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/'
+
+# Add your Secret Key and Api Tokens to your settings.py file.
+# Use the below format.
+
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =  "your google token key"
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "your google secret key"
+# SOCIAL_AUTH_TWITTER_KEY = 'your twitter token'
+# SOCIAL_AUTH_TWITTER_SECRET = 'your twitter secret key'
+# SOCIAL_AUTH_FACEBOOK_KEY = 'your facebook token'
+# SOCIAL_AUTH_FACEBOOK_SECRET = 'your facebook secret key'
