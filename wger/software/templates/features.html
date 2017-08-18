@@ -18,32 +18,200 @@
 {# Content #}
 {#         #}
 {% block content %}
-    <header>
-        <div class="container">
-            <div class="intro-text">
-                <div class="intro-heading">{% trans "Welcome to wger" %}</div>
-                <div class="intro-lead-in">{% trans "Your body." %}</div>
-                <div class="intro-lead-in">{% trans "Your workouts." %}</div>
-                <div class="intro-lead-in">{% trans "Your data." %}</div>
-                <div class="intro-lead-in">{% trans "Your progress." %}</div>
-                {% if allow_guest_users and not user.is_authenticated %}
-                    <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl" rel="nofollow" style="margin-top: 1em;">
-                        {% trans "Try it now" %}
-                    </a>
-                {% endif %}
+    <header>                  
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            </ol>
+    
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <div class="cover-overlay"></div>
+                    <img src="{% static 'images/banner2.jpg' %}" alt="welcome to wger" width="100%"/>
+                    <div class="carousel-caption intro-text">
+                        <div class="cover-caption intro-text">
+                            <div class="intro-heading">{% trans "Welcome to wger" %}</div>
+                            <p class="intro-lead-in"> 
+                                {% trans "Your body. Your workouts. Your data. Your progress." %}
+                            </p>
 
-                {% if not user.is_authenticated or user.userprofile.is_temporary %}
-                    {% if allow_registration %}
-                        <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                            {% if allow_guest_users and not user.is_authenticated %}
+                            <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl" rel="nofollow" style="margin-top: 1em;">{% trans "Try it now" %}</a> 
+                            {% endif %} 
+                                
+                            {% if not user.is_authenticated or user.userprofile.is_temporary %} 
+                            {% if allow_registration %}
+                            <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
                             {% trans "Register" %}
-                        </a>
-                    {% endif %}
+                            </a> 
+                            {% endif %}
+                                <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                            {% trans "Login" %}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
 
-                    <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                <!-- item 2: weight tracker-->
+                <div class="item">
+                    <div class="cover-overlay"></div>
+                    <img src="{% static 'images/slider/weight2.jpg' %}" alt="" width="100%"/>
+                    <div class="carousel-caption intro-text">
+                        <div class="cover-caption intro-text">
+                            <div class="intro-heading">{% trans "Weight tracker" %}</div>
+                            <p class="intro-lead-in">
+                                {% trans 'The Weight chart makes it easier to see that you are reaching your goals.' %}'
+                            </p>
+
+                            {% if allow_guest_users and not user.is_authenticated %}
+                            <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl" rel="nofollow" style="margin-top: 1em;">{% trans "Try it now" %}</a> 
+                            {% endif %} 
+                                
+                            {% if not user.is_authenticated or user.userprofile.is_temporary %} 
+                            {% if allow_registration %}
+                            <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                            {% trans "Register" %}
+                            </a> 
+                            {% endif %}
+                                <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                            {% trans "Login" %}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- item 3: Calender -->
+                <div class="item">
+                    <div class="cover-overlay"></div>
+                    <img src="{% static 'images/slider/calender2.jpg' %}" alt="calender" width="100%" />
+                    <div class="carousel-caption intro-text">
+                        <div class="intro-heading">{% trans "Calender" %}</div>
+                        <p class="intro-lead-in">
+                            A Fast way to get an overview of when and how you trained. With all your diary entries about how you personally felt you performed.     
+                        </p>
+
+                        {% if allow_guest_users and not user.is_authenticated %}
+                        <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl" rel="nofollow" style="margin-top: 1em;">{% trans "Try it now" %}</a> 
+                        {% endif %} 
+                            
+                        {% if not user.is_authenticated or user.userprofile.is_temporary %} 
+                        {% if allow_registration %}
+                        <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                        {% trans "Register" %}
+                        </a> 
+                        {% endif %}
+                            <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
                         {% trans "Login" %}
-                    </a>
-                {% endif %}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- item 4: Exercise databse -->
+                <div class="item">
+                    <div class="cover-overlay"></div>
+                    <img src="{% static 'images/slider/workout.jpg' %}" alt="Exercise databas" width="100%" />
+                    <div class="carousel-caption intro-text">
+                        <div class="cover-caption intro-text">
+                            <div class="intro-heading">{% trans "Exercise Database" %}</div>
+                            <p class="intro-lead-in">
+                                An exercise database that contains more than 100+ Exercises to choose from<br>
+                            </p>
+
+                            {% if allow_guest_users and not user.is_authenticated %}
+                            <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl" rel="nofollow" style="margin-top: 1em;">{% trans "Try it now" %}</a> 
+                            {% endif %} 
+                                
+                            {% if not user.is_authenticated or user.userprofile.is_temporary %} 
+                            {% if allow_registration %}
+                            <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                            {% trans "Register" %}
+                            </a> 
+                            {% endif %}
+                                <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                            {% trans "Login" %}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- item 5: Gym Management -->
+                <div class="item">
+                    <div class="cover-overlay"></div>
+                    <img src="{% static 'images/slider/gym2.jpg' %}" alt="" width="100%">
+                    <div class="carousel-caption intro-text">
+                        <div class="cover-caption intro-text">
+                            <div class="intro-heading">{% trans "Gym Management" %}</div>
+                            <p class="intro-lead-in">
+                                You can use the application to manage members, workouts, attendance and keep notes.
+                            </p>
+
+                            {% if allow_guest_users and not user.is_authenticated %}
+                            <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl" rel="nofollow" style="margin-top: 1em;">{% trans "Try it now" %}</a> 
+                            {% endif %} 
+                                
+                            {% if not user.is_authenticated or user.userprofile.is_temporary %} 
+                            {% if allow_registration %}
+                            <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                            {% trans "Register" %}
+                            </a> 
+                            {% endif %}
+                                <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                            {% trans "Login" %}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- item 6: REST API -->
+                <div class="item">
+                    <div class="cover-overlay"></div>
+                    <img src="{% static 'images/slider/api.jpg' %}" />
+                    <div class="carousel-caption intro-text">
+                        <div class="cover-caption intro-text">
+                            <div class="intro-heading">{% trans "REST API" %}</div>
+                            <p class="intro-lead-in">
+                                wger provides a REST API with full read and write access to all data so easy integration of your own application and tools. 
+                            </p>
+
+                            {% if allow_guest_users and not user.is_authenticated %}
+                            <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl" rel="nofollow" style="margin-top: 1em;">{% trans "Try it now" %}</a> 
+                            {% endif %} 
+                                
+                            {% if not user.is_authenticated or user.userprofile.is_temporary %} 
+                            {% if allow_registration %}
+                            <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                            {% trans "Register" %}
+                            </a> 
+                            {% endif %}
+                                <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                            {% trans "Login" %}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
+    
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
         </div>
     </header>
 
