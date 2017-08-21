@@ -107,6 +107,7 @@ router.register(r'language', core_api_views.LanguageViewSet,
 router.register(r'daysofweek', core_api_views.DaysOfWeekViewSet,
                 base_name='daysofweek')
 router.register(r'license', core_api_views.LicenseViewSet, base_name='license')
+router.register(r'create-user', core_api_views.CreateUserViewSet, base_name='create-user')
 router.register(r'setting-repetitionunit',
                 core_api_views.RepetitionUnitViewSet, base_name='setting-repetition-unit')
 router.register(r'setting-weightunit',
@@ -196,6 +197,14 @@ urlpatterns += [
         nutrition_api_views.search,
         name='ingredient-search'),
     url(r'^api/v2/', include(router.urls)),
+]
+
+#
+# URLs for social app
+#
+urlpatterns += [
+    url('', include('social_django.urls', namespace='social')),
+    url('', include('django.contrib.auth.urls', namespace='auth')),
 ]
 
 #
