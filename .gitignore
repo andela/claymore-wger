@@ -6,7 +6,9 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+.DS_Store
 .Python
+wger-venv/
 env/
 build/
 develop-eggs/
@@ -58,7 +60,10 @@ target/
 
 # IDE
 .idea/
+.DS_Store
+.vscode
 
-# External Libraries 
+# External Libraries
 wger/core/static/bower_components
 node_modules
+wger-env/
