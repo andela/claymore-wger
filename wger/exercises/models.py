@@ -19,7 +19,6 @@ import six
 import uuid
 import logging
 import bleach
-
 from django.db import models
 from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify  # django.utils.text.slugify in django 1.5!
@@ -105,6 +104,17 @@ class Equipment(models.Model):
         '''
         return False
 
+    def delete(self, *args, **kwargs):
+        '''
+        Reset all cached infos
+        '''
+        for language in Language.objects.all():
+            delete_template_fragment_cache('exercise-overview', language.id)
+            delete_template_fragment_cache('exercise-overview-mobile', language.id)
+
+        super(ExerciseCategory, self).delete(*args, **kwargs)
+
+
 
 @python_2_unicode_compatible
 class ExerciseCategory(models.Model):
@@ -148,6 +158,7 @@ class ExerciseCategory(models.Model):
         Reset all cached infos
         '''
         for language in Language.objects.all():
+
             delete_template_fragment_cache('exercise-overview', language.id)
             delete_template_fragment_cache('exercise-overview-mobile', language.id)
 

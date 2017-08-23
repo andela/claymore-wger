@@ -26,6 +26,7 @@ from django.views.generic.edit import ModelFormMixin
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 
+
 from wger.utils.constants import (
     HTML_TAG_WHITELIST,
     HTML_ATTRIBUTES_WHITELIST,

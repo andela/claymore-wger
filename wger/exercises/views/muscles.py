@@ -15,11 +15,15 @@
 # You should have received a copy of the GNU Affero General Public License
 import logging
 
+from django.db.models.signals import post_delete,pre_delete, post_save
+from django.core.cache import cache
+from django.dispatch import receiver
+
+
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
-
 from django.views.generic import (
     ListView,
     DeleteView,
@@ -47,17 +51,24 @@ class MuscleListView(ListView):
     context_object_name = 'muscle_list'
     template_name = 'muscles/overview.html'
 
+    def get_queryset(self):
+        queryset = Muscle.objects.all().order_by('-is_front', 'name')
+        return queryset,
+
     def get_context_data(self, **kwargs):
         '''
         Send some additional data to the template
         '''
+        #
+
         context = super(MuscleListView, self).get_context_data(**kwargs)
         context['active_languages'] = load_item_languages(LanguageConfig.SHOW_ITEM_EXERCISES)
         context['show_shariff'] = True
+
         return context
 
 
-class MuscleAdminListView(LoginRequiredMixin, PermissionRequiredMixin, MuscleListView):
+class MuscleAdminListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     '''
     Overview of all muscles, for administration purposes
     '''
@@ -110,6 +121,7 @@ class MuscleDeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMi
     permission_required = 'exercises.delete_muscle'
     messages = ugettext_lazy('Successfully deleted')
 
+
     def get_context_data(self, **kwargs):
         '''
         Send some additional data to the template
@@ -117,4 +129,5 @@ class MuscleDeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMi
         context = super(MuscleDeleteView, self).get_context_data(**kwargs)
         context['title'] = _(u'Delete {0}?').format(self.object.name)
         context['form_action'] = reverse('exercise:muscle:delete', kwargs={'pk': self.kwargs['pk']})
+        cache.clear()
         return context
