@@ -76,6 +76,61 @@ class ExerciseViewSet(viewsets.ModelViewSet):
         obj.set_author(self.request)
         obj.save()
 
+@api_view(['GET'])
+def exercises(request):
+    '''
+    Api endpoint for all exercise information.
+    '''
+
+    id = request.GET.get('id', None)
+    json_response = {}
+    response = []
+
+    if id:
+        # Return exercise with the id.
+        exercises = Exercise.objects.filter(pk=id)
+        for exercise in exercises:
+
+            # return image url or none if it doesnt exist.
+            if exercise.main_image:
+                image_obj = exercise.main_image
+                image = image_obj.image.url
+            else:
+                image = None
+
+            # collect muscles for the exercise.
+            muscles_info = [{
+                'id': muscle.pk,
+                'name': muscle.name,
+                'is_front': muscle.is_front,
+            } for muscle in exercise.muscles.all()]
+
+            # collect secondary muscles for the exercise.
+            secondary_muscles = [{
+                'id': muscle.pk,
+                'name': muscle.name,
+                'is_front': muscle.is_front,
+            } for muscle in exercise.muscles_secondary.all()]
+
+            # collect equipment info for the exercise.
+            equipments_info = [
+                equipment.name for equipment in exercise.equipment.all()
+            ]
+
+            # compile all info into a dictionary.
+            data = {
+                'name': exercise.name,
+                'category': exercise.category.name,
+                'muscles': muscles_info,
+                'secondary_muscles': secondary_muscles,
+                'equipment': equipments_info,
+                'image': image
+            }
+            response.append(data)
+
+    json_response['exercises'] = response
+    return Response(json_response)
+
 
 @api_view(['GET'])
 def search(request):
