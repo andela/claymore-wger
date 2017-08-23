@@ -389,12 +389,11 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_LOGIN_URL = '/user/login'
 SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/'
 
-# Add your Secret Key and Api Tokens to your settings.py file.
-# Use the below format.
+# Secret keys and api tokens.
 
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =  "your google token key"
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "your google secret key"
-# SOCIAL_AUTH_TWITTER_KEY = 'your twitter token'
-# SOCIAL_AUTH_TWITTER_SECRET = 'your twitter secret key'
-# SOCIAL_AUTH_FACEBOOK_KEY = 'your facebook token'
-# SOCIAL_AUTH_FACEBOOK_SECRET = 'your facebook secret key'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =  os.environ.get("GOOGLE_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("GOOGLE_SECRET")
+SOCIAL_AUTH_TWITTER_KEY = os.environ.get('TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('TWITTER_SECRET')
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get("FACEBOOK_KEY")
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
