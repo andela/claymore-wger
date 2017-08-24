@@ -16,6 +16,7 @@ $(document).ready(function() {
     {% for muscle in muscle_list|first %}
         wgerPrefetchImages(['/static/images/muscles/main/muscle-' + {{muscle.id}} + '.svg']);
     {% endfor %}
+    
     wgerPrefetchImages(['/static/images/muscles/muscular_system_back.svg']);
 
 
