@@ -12,7 +12,6 @@ pillow
 easy-thumbnails
 django_compressor
 icalendar
-django-bootstrap-breadcrumbs
 sphinx
 django-sortedm2m
 django-bower
