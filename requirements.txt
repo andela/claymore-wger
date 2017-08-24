@@ -3,7 +3,6 @@
 # Requirements for wger for production
 #
 
-Django>=1.9,<1.10
 django-recaptcha
 reportlab
 django_mobile
