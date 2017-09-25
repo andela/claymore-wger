@@ -68,13 +68,6 @@ wger/core/static/bower_components
 node_modules
 
 venv/
-wger/config/migrations/
-wger/core/migrations/
-wger/email/migrations/
-wger/exercises/migrations/
-wger/gym/migrations/
-wger/manager/migrations/
-wger/nutrition/migrations/
 package-lock.json
 .DS_Store
 .gitignore.swp
